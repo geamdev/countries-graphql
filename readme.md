@@ -2,7 +2,7 @@
 
 ## Demo
 
-You can visit a demonstration [here](https://react-countries-graphql.vercel.app)
+You can visit a demonstration [here](https://geampiere-countries-graphql.vercel.app/)
 
 ## About this proyect
 
