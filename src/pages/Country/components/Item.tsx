@@ -6,29 +6,29 @@ interface ItemProps {
 
 const Item = ({ country }: ItemProps) => {
   return (
-    <div className="bg-gray-100 rounded-lg p-10 flex flex-col items-center space-y-3">
-      <h2 className="text-4xl font-black text-center">
+    <div className="bg-gray-100 rounded-lg p-8 flex flex-col items-start gap-3 shadow-md">
+      <h2 className="text-4xl font-black text-center text-gray-800">
         {country.name} {country.emoji}
       </h2>
 
       <div className="flex flex-col">
-        <p>
-          <span className="font-bold">Capital: </span>
+        <p className="text-gray-600">
+          <span className="font-bold text-gray-800">Capital: </span>
           {country.capital ?? '-'}
         </p>
 
-        <p>
-          <span className="font-bold">Currency: </span>
+        <p className="text-gray-800">
+          <span className="font-bold text-gray-800">Currency: </span>
           {country.currency ?? '-'}
         </p>
 
-        <p>
-          <span className="font-bold">Continent: </span>
+        <p className="text-gray-800">
+          <span className="font-bold text-gray-800">Continent: </span>
           {country.continent.name + ' (' + country.continent.code + ')' ?? '-'}
         </p>
 
-        <p>
-          <span className="font-bold">Languages: </span>
+        <p className="text-gray-800">
+          <span className="font-bold text-gray-800">Languages: </span>
           {country.languages.map((language) => language.name).join(', ') ?? '-'}
         </p>
       </div>

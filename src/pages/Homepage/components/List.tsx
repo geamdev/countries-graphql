@@ -5,6 +5,7 @@ import { useCountries } from '@/hooks';
 import { CountryFragment } from '@/services/graphql';
 import { Link } from 'wouter';
 import { LinkTo } from '@/styled-components';
+import { GrFormView } from 'react-icons/gr';
 
 const headers: string[] = ['Code', 'Name', 'Continent', 'Currency', 'Actions'];
 
@@ -12,6 +13,10 @@ const List = () => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<CountryFragment[]>([]);
   const { countries, getAllCountries } = useCountries();
+
+  const redirect = (code: string) => {
+    window.location.href = `/country/${code}`;
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -33,14 +38,16 @@ const List = () => {
   const renderRows = useMemo(
     () =>
       list.map((row: CountryFragment, idRow) => (
-        <Table.Row key={idRow}>
+        <Table.Row key={idRow} onClick={() => redirect(row.code)}>
           <Table.Cell>{row.code}</Table.Cell>
           <Table.Cell>{row.name}</Table.Cell>
           <Table.Cell>{row.continent.name}</Table.Cell>
           <Table.Cell>{row.currency ?? '-'}</Table.Cell>
           <Table.Cell>
             <Link href={`/country/${row.code}`}>
-              <LinkTo>View</LinkTo>
+              <LinkTo>
+                <GrFormView size={25} />
+              </LinkTo>
             </Link>
           </Table.Cell>
         </Table.Row>

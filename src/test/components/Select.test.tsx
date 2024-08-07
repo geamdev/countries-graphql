@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { Select } from '../../components';
 
 describe('<Select /> Component', () => {
-  let allClass = 'max-h-80 max-width-300 border-2 border rounded-lg overflow-y-scroll p-0.5 absolute z-10 bg-white w-full';
+  let allClass = 'max-h-80 max-width-300 border-2 rounded-lg overflow-y-scroll p-0.5 absolute z-10 bg-white w-full';
   let continentList: string[] = [];
 
   let onFocused = jest.fn(() => {

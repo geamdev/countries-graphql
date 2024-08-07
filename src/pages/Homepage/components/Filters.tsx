@@ -5,12 +5,6 @@ import { Continent } from '@/services/graphql';
 import { FilterType } from '@/hooks/useFilters';
 import Search from './Search';
 
-interface FiltersProps {
-  getCountriesByContinent: (continents: string[]) => void;
-  getCountriesByName: (name: string) => void;
-  getCountriesByCurrencies: (currencies: string[]) => void;
-}
-
 let timeOutId: any;
 
 const Filters = () => {
@@ -56,10 +50,10 @@ const Filters = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center md:justify-between">
+    <div className="flex flex-col md:flex-row items-center md:justify-between max-w-[1228px] mx-auto mb-4">
       <Search placeholder="Search" onChange={onHandleChange} value={search} />
 
-      <div className="flex justfy-start space-x-4">
+      <div className="flex flex-col md:flex-row items-center gap-0 md:gap-2">
         <Select
           onFocus={() => {
             if (currencies.length < 1) {

@@ -8,9 +8,9 @@ describe('<Nav /> Component', () => {
     const anchors = screen.getAllByRole('links');
     expect(anchors.length).toBe(2);
     expect(anchors[0]).toHaveTextContent('Portfolio');
-    expect(anchors[0]).toHaveAttribute('href', 'https://jordanjaramillo.co');
+    expect(anchors[0]).toHaveAttribute('href', 'https://geampiere.vercel.app');
     expect(anchors[1]).toHaveTextContent('Github');
-    expect(anchors[1]).toHaveAttribute('href', 'https://github.com/jordanrjdev');
+    expect(anchors[1]).toHaveAttribute('href', 'https://github.com/geamdev');
   });
 });
 

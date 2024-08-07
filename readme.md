@@ -1,12 +1,14 @@
 # Countries-Graphql
 
-## You can visit a demo [here](https://react-countries-graphql.vercel.app)
+## Demo
+
+You can visit a demonstration [here](https://react-countries-graphql.vercel.app)
 
 ## About this proyect
 
 Get all the countries of the world and know the details of these with a single click. You can search and filter according to your interests.
 
-You can enter this [graphql playground](https://countries.trevorblades.com/) which is where all the information that we are showing in this application comes from.
+You can access this [GraphQl playground](https://countries.trevorblades.com/) which is where all the information we show in this application comes from.
 
 ## Installation
 
@@ -46,7 +48,21 @@ To make the requests we use [apollo-client](https://www.apollographql.com/) whic
 
 ### Why we use GraphQL Code Generator?
 
-In order to have all the types that we have in our api we use [graphql-code-generator](https://www.graphql-code-generator.com) since this way we can obtain the typeScript typing of each of our entities which saves us the time of not defining the types ourselves.
+To get all the types we have in our API, we use [graphql-code-generator](https://www.graphql-code-generator.com) as it allows us to obtain the TypeScript typing of each of our entities, which saves us time by not having to define the types ourselves.
+
+### Contribución
+
+If you wish to contribute to this project, please follow the steps below:
+
+1. Perform a fork of the project
+2. Create a branch with your feature: `git checkout -b feature/feature-name`.
+3. Perform a commit of your changes: `git commit -m 'feature-name'`.
+4. Push to the branch: `git push origin feature/feature-name`.
+5. Perform a pull request
+
+### Créditos
+
+This project was created by [Geampiere](https://geampiere.vercel.app) with ❤️.
 
 ### License
 

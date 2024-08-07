@@ -37,15 +37,15 @@ const Select = ({ list, selectedItems, placeholder, selectItems, onblur, onFocus
         case useCombobox.stateChangeTypes.ItemClick:
           return {
             ...changes,
-            isOpen: true, // keep menu open after selection.
+            isOpen: true,
             highlightedIndex: state.highlightedIndex,
-            inputValue: '' // don't add the item string as input value at selection.
+            inputValue: ''
           };
         case useCombobox.stateChangeTypes.InputBlur:
           onblur();
           return {
             ...changes,
-            inputValue: '' // don't add the item string as input value at selection.
+            inputValue: ''
           };
         default:
           return changes;
@@ -71,7 +71,11 @@ const Select = ({ list, selectedItems, placeholder, selectItems, onblur, onFocus
 
   return (
     <div className="relative" onFocus={onFocus} role="select-container">
-      <div {...getComboboxProps()} className="flex items-center border border-2 p-2 w-fit rounded-lg my-2" role="select">
+      <div
+        {...getComboboxProps()}
+        className="flex h-10 w-full rounded-md border-2 border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none"
+        role="select"
+      >
         <input placeholder={placeholderText} {...getInputProps()} className="flex-1 focus:outline-none" />
         <button
           role="button"
@@ -84,7 +88,7 @@ const Select = ({ list, selectedItems, placeholder, selectItems, onblur, onFocus
       </div>
       <ul
         {...getMenuProps()}
-        className={`max-h-80 max-width-300 border-2 border rounded-lg overflow-y-scroll p-0.5 absolute z-10 bg-white w-full${
+        className={`max-h-80 max-width-300 border-2 rounded-lg overflow-y-scroll p-0.5 absolute z-10 bg-white w-full${
           !isOpen ? ' hidden' : ''
         }`}
       >
@@ -103,11 +107,11 @@ const Select = ({ list, selectedItems, placeholder, selectItems, onblur, onFocus
                 index
               })}
               role="option"
-              className="hover:bg-indigo-100 cursor-pointer p-1 flex items-center space-x-1"
+              className="hover:bg-indigo-100 cursor-pointer p-1 flex items-center gap-2"
             >
               <input type="checkbox" checked={selectedItems.includes(item)} value={item} onChange={() => null} />
-              <span />
-              {item}
+
+              <p className="text-gray-600 text-sm">{item}</p>
             </li>
           ))}
       </ul>

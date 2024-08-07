@@ -1,9 +1,9 @@
 import { Loading } from '@/components';
 import { WithLayout } from '@/hocs';
 import { useGetCountryQuery } from '@/services/graphql';
-import { LinkTo } from '@/styled-components';
 import { Link, Redirect, useRoute } from 'wouter';
 import { Item } from './components';
+import { FaChevronLeft } from 'react-icons/fa';
 
 const Country = () => {
   const [match, params] = useRoute('/country/:code');
@@ -13,17 +13,15 @@ const Country = () => {
   });
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 max-w-[1228px] mx-auto">
       <Link href="/">
-        <a className="inline-block sm:w-full lg:w-auto my-2 border rounded md py-4 px-8 text-center bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">
-          Back to home
+        <a className="flex items-center gap-2 text-[#0D162F] hover:text-[#868a97] duration-300 my-2">
+          <FaChevronLeft />
+          <span>Back to home</span>
         </a>
       </Link>
-
       {loading && <Loading />}
-
       {!loading && data?.country && <Item country={data.country} />}
-
       {!loading && !data?.country && <Redirect to="/" />}
     </div>
   );
