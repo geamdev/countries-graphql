@@ -5,22 +5,23 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  _Any: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 export type Continent = {
   __typename?: 'Continent';
-  code: Scalars['ID'];
+  code: Scalars['ID']['output'];
   countries: Array<Country>;
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
 };
 
 export type ContinentFilterInput = {
@@ -29,31 +30,41 @@ export type ContinentFilterInput = {
 
 export type Country = {
   __typename?: 'Country';
-  capital?: Maybe<Scalars['String']>;
-  code: Scalars['ID'];
+  awsRegion: Scalars['String']['output'];
+  capital?: Maybe<Scalars['String']['output']>;
+  code: Scalars['ID']['output'];
   continent: Continent;
-  currency?: Maybe<Scalars['String']>;
-  emoji: Scalars['String'];
-  emojiU: Scalars['String'];
+  currencies: Array<Scalars['String']['output']>;
+  currency?: Maybe<Scalars['String']['output']>;
+  emoji: Scalars['String']['output'];
+  emojiU: Scalars['String']['output'];
   languages: Array<Language>;
-  name: Scalars['String'];
-  native: Scalars['String'];
-  phone: Scalars['String'];
+  name: Scalars['String']['output'];
+  native: Scalars['String']['output'];
+  phone: Scalars['String']['output'];
+  phones: Array<Scalars['String']['output']>;
   states: Array<State>;
+  subdivisions: Array<Subdivision>;
+};
+
+
+export type CountryNameArgs = {
+  lang?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CountryFilterInput = {
   code?: InputMaybe<StringQueryOperatorInput>;
   continent?: InputMaybe<StringQueryOperatorInput>;
   currency?: InputMaybe<StringQueryOperatorInput>;
+  name?: InputMaybe<StringQueryOperatorInput>;
 };
 
 export type Language = {
   __typename?: 'Language';
-  code: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  native?: Maybe<Scalars['String']>;
-  rtl: Scalars['Boolean'];
+  code: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  native: Scalars['String']['output'];
+  rtl: Scalars['Boolean']['output'];
 };
 
 export type LanguageFilterInput = {
@@ -62,8 +73,6 @@ export type LanguageFilterInput = {
 
 export type Query = {
   __typename?: 'Query';
-  _entities: Array<Maybe<_Entity>>;
-  _service: _Service;
   continent?: Maybe<Continent>;
   continents: Array<Continent>;
   countries: Array<Country>;
@@ -73,13 +82,8 @@ export type Query = {
 };
 
 
-export type Query_EntitiesArgs = {
-  representations: Array<Scalars['_Any']>;
-};
-
-
 export type QueryContinentArgs = {
-  code: Scalars['ID'];
+  code: Scalars['ID']['input'];
 };
 
 
@@ -94,12 +98,12 @@ export type QueryCountriesArgs = {
 
 
 export type QueryCountryArgs = {
-  code: Scalars['ID'];
+  code: Scalars['ID']['input'];
 };
 
 
 export type QueryLanguageArgs = {
-  code: Scalars['ID'];
+  code: Scalars['ID']['input'];
 };
 
 
@@ -109,48 +113,46 @@ export type QueryLanguagesArgs = {
 
 export type State = {
   __typename?: 'State';
-  code?: Maybe<Scalars['String']>;
+  code?: Maybe<Scalars['String']['output']>;
   country: Country;
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
 };
 
 export type StringQueryOperatorInput = {
-  eq?: InputMaybe<Scalars['String']>;
-  glob?: InputMaybe<Scalars['String']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  ne?: InputMaybe<Scalars['String']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  regex?: InputMaybe<Scalars['String']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
+  ne?: InputMaybe<Scalars['String']['input']>;
+  nin?: InputMaybe<Array<Scalars['String']['input']>>;
+  regex?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type _Entity = Continent | Country | Language;
-
-export type _Service = {
-  __typename?: '_Service';
-  /** The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied */
-  sdl?: Maybe<Scalars['String']>;
+export type Subdivision = {
+  __typename?: 'Subdivision';
+  code: Scalars['ID']['output'];
+  emoji?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
 };
 
-export type CountryFragment = { __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name?: string | null, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } };
+export type CountryFragment = { __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name: string, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } };
 
 export type GetAllContriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllContriesQuery = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name?: string | null, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } }> };
+export type GetAllContriesQuery = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name: string, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } }> };
 
 export type GetCountriesByContinentQueryVariables = Exact<{
-  code: Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
 }>;
 
 
-export type GetCountriesByContinentQuery = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name?: string | null, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } }> };
+export type GetCountriesByContinentQuery = { __typename?: 'Query', countries: Array<{ __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name: string, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } }> };
 
 export type GetCountryQueryVariables = Exact<{
-  code: Scalars['ID'];
+  code: Scalars['ID']['input'];
 }>;
 
 
-export type GetCountryQuery = { __typename?: 'Query', country?: { __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name?: string | null, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } } | null };
+export type GetCountryQuery = { __typename?: 'Query', country?: { __typename?: 'Country', code: string, name: string, capital?: string | null, emoji: string, currency?: string | null, languages: Array<{ __typename?: 'Language', name: string, code: string }>, continent: { __typename?: 'Continent', name: string, code: string } } | null };
 
 export type GetAllContinentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -205,11 +207,16 @@ export function useGetAllContriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetAllContriesQuery, GetAllContriesQueryVariables>(GetAllContriesDocument, options);
         }
+export function useGetAllContriesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllContriesQuery, GetAllContriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllContriesQuery, GetAllContriesQueryVariables>(GetAllContriesDocument, options);
+        }
 export type GetAllContriesQueryHookResult = ReturnType<typeof useGetAllContriesQuery>;
 export type GetAllContriesLazyQueryHookResult = ReturnType<typeof useGetAllContriesLazyQuery>;
+export type GetAllContriesSuspenseQueryHookResult = ReturnType<typeof useGetAllContriesSuspenseQuery>;
 export type GetAllContriesQueryResult = Apollo.QueryResult<GetAllContriesQuery, GetAllContriesQueryVariables>;
 export const GetCountriesByContinentDocument = gql`
-    query GetCountriesByContinent($code: [String]!) {
+    query GetCountriesByContinent($code: [String!]) {
   countries(filter: {continent: {in: $code}}) {
     ...Country
   }
@@ -232,7 +239,7 @@ export const GetCountriesByContinentDocument = gql`
  *   },
  * });
  */
-export function useGetCountriesByContinentQuery(baseOptions: Apollo.QueryHookOptions<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>) {
+export function useGetCountriesByContinentQuery(baseOptions?: Apollo.QueryHookOptions<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>(GetCountriesByContinentDocument, options);
       }
@@ -240,8 +247,13 @@ export function useGetCountriesByContinentLazyQuery(baseOptions?: Apollo.LazyQue
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>(GetCountriesByContinentDocument, options);
         }
+export function useGetCountriesByContinentSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>(GetCountriesByContinentDocument, options);
+        }
 export type GetCountriesByContinentQueryHookResult = ReturnType<typeof useGetCountriesByContinentQuery>;
 export type GetCountriesByContinentLazyQueryHookResult = ReturnType<typeof useGetCountriesByContinentLazyQuery>;
+export type GetCountriesByContinentSuspenseQueryHookResult = ReturnType<typeof useGetCountriesByContinentSuspenseQuery>;
 export type GetCountriesByContinentQueryResult = Apollo.QueryResult<GetCountriesByContinentQuery, GetCountriesByContinentQueryVariables>;
 export const GetCountryDocument = gql`
     query GetCountry($code: ID!) {
@@ -267,7 +279,7 @@ export const GetCountryDocument = gql`
  *   },
  * });
  */
-export function useGetCountryQuery(baseOptions: Apollo.QueryHookOptions<GetCountryQuery, GetCountryQueryVariables>) {
+export function useGetCountryQuery(baseOptions: Apollo.QueryHookOptions<GetCountryQuery, GetCountryQueryVariables> & ({ variables: GetCountryQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetCountryQuery, GetCountryQueryVariables>(GetCountryDocument, options);
       }
@@ -275,8 +287,13 @@ export function useGetCountryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetCountryQuery, GetCountryQueryVariables>(GetCountryDocument, options);
         }
+export function useGetCountrySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCountryQuery, GetCountryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCountryQuery, GetCountryQueryVariables>(GetCountryDocument, options);
+        }
 export type GetCountryQueryHookResult = ReturnType<typeof useGetCountryQuery>;
 export type GetCountryLazyQueryHookResult = ReturnType<typeof useGetCountryLazyQuery>;
+export type GetCountrySuspenseQueryHookResult = ReturnType<typeof useGetCountrySuspenseQuery>;
 export type GetCountryQueryResult = Apollo.QueryResult<GetCountryQuery, GetCountryQueryVariables>;
 export const GetAllContinentsDocument = gql`
     query GetAllContinents {
@@ -310,6 +327,11 @@ export function useGetAllContinentsLazyQuery(baseOptions?: Apollo.LazyQueryHookO
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetAllContinentsQuery, GetAllContinentsQueryVariables>(GetAllContinentsDocument, options);
         }
+export function useGetAllContinentsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllContinentsQuery, GetAllContinentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllContinentsQuery, GetAllContinentsQueryVariables>(GetAllContinentsDocument, options);
+        }
 export type GetAllContinentsQueryHookResult = ReturnType<typeof useGetAllContinentsQuery>;
 export type GetAllContinentsLazyQueryHookResult = ReturnType<typeof useGetAllContinentsLazyQuery>;
+export type GetAllContinentsSuspenseQueryHookResult = ReturnType<typeof useGetAllContinentsSuspenseQuery>;
 export type GetAllContinentsQueryResult = Apollo.QueryResult<GetAllContinentsQuery, GetAllContinentsQueryVariables>;

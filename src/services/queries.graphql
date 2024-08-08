@@ -20,7 +20,7 @@ query GetAllContries {
   }
 }
 
-query GetCountriesByContinent($code: [String]!) {
+query GetCountriesByContinent($code: [String!]) {
   countries(filter: { continent: { in: $code } }) {
     ...Country
   }
